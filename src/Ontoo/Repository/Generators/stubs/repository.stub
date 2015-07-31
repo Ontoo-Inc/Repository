@@ -1,0 +1,52 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use $MODEL$;
+use Ontoo\Repositories\Contracts\Presentable;
+use Ontoo\Repositories\Criteria\RequestCriteria;
+use Ontoo\Repositories\Eloquent\BaseRepository;
+$PRESENTER$
+
+/**
+ * Class $CLASS$Repository
+ *
+ * @package $NAMESPACE$
+ */
+class $CLASS$Repository extends BaseRepository implements Presentable
+{
+    /**
+     * Fields for RequestCriteria.
+     *
+     * @var array
+     */
+    protected $searchableFields = [];
+
+    /**
+     * Set model for repository.
+     *
+     * @return string
+     */
+    public function model()
+    {
+        return $CLASS$::class;
+    }
+
+    /**
+     * Boot the repository.
+     */
+    public function boot()
+    {
+        $this->pushCriteria(RequestCriteria::class);
+    }
+
+    /**
+     * Set presenter for reposiroty.
+     *
+     * @return mixed
+     */
+    public function presenter()
+    {
+        return $PRESENTERCLASS$;
+    }
+}

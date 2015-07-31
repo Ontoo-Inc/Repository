@@ -1,0 +1,29 @@
+{
+    "name": "ontoo/repository",
+    "description": "Repositories for Laravel 5",
+    "authors": [
+        {
+            "name": "Karl Li",
+            "email": "killtw@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "keywords": ["laravel", "repository"],
+    "require": {
+        "php": ">=5.4.0",
+        "league/fractal": "^0.12.0",
+        "illuminate/http": "~5.0|~5.1",
+        "illuminate/config": "~5.0|~5.1",
+        "illuminate/console": "~5.0|~5.1",
+        "illuminate/support": "~5.0|~5.1",
+        "illuminate/database": "~5.0|~5.1",
+        "illuminate/pagination": "~5.0|~5.1",
+        "prettus/laravel-validation": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ontoo\\Repository\\": "src/Ontoo/Repository"
+        }
+    },
+    "minimum-stability": "dev"
+}
