@@ -1,7 +1,7 @@
 <?php
 return [
     'generator' => [
-        'rootNamespace' => 'APP\\',
+        'rootNamespace' => 'App\\',
         'modelNamespace' => 'App\\',
         'basePath' => app_path()
     ],
