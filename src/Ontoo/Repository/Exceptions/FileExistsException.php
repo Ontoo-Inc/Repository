@@ -1,13 +1,13 @@
 <?php
 
-namespace Ontoo\Repositories\Exceptions;
+namespace Ontoo\Repository\Exceptions;
 
 use Exception;
 
 /**
  * Class FileExistsException
  *
- * @package Ontoo\Repositories\Exceptions
+ * @package Ontoo\Repository\Exceptions
  */
 class FileExistsException extends Exception
 {

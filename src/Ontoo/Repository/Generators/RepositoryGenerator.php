@@ -1,11 +1,11 @@
 <?php
 
-namespace Ontoo\Repositories\Generators;
+namespace Ontoo\Repository\Generators;
 
 /**
  * Class RepositoryGenerator
  *
- * @package Ontoo\Repositories\Generators
+ * @package Ontoo\Repository\Generators
  */
 class RepositoryGenerator extends Generator
 {

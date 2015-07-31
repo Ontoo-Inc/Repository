@@ -1,15 +1,16 @@
 <?php
-namespace Ontoo\Repositories\Criteria;
+
+namespace Ontoo\Repository\Criteria;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Ontoo\Repositories\Contracts\CriteriaInterface;
-use Ontoo\Repositories\Contracts\RepositoryInterface;
+use Ontoo\Repository\Contracts\CriteriaInterface;
+use Ontoo\Repository\Contracts\RepositoryInterface;
 
 /**
  * Class RequestCriteria
  *
- * @package Ontoo\Repositories\Criteria
+ * @package Ontoo\Repository\Criteria
  */
 class RequestCriteria implements CriteriaInterface
 {
@@ -61,6 +62,12 @@ class RequestCriteria implements CriteriaInterface
         return $model;
     }
 
+    /**
+     * @param $queryString
+     * @param $searchableFields
+     *
+     * @return array
+     */
     private function parseSearchData($queryString, $searchableFields)
     {
         $searchData = [];
@@ -88,6 +95,12 @@ class RequestCriteria implements CriteriaInterface
         return $searchData;
     }
 
+    /**
+     * @param $searchValue
+     * @param $condition
+     *
+     * @return array
+     */
     private function parseCondition($searchValue, $condition)
     {
         $acceptedConditions = config('repository.criteria.acceptedConditions', ['=', 'like']);
@@ -123,6 +136,12 @@ class RequestCriteria implements CriteriaInterface
         ];
     }
 
+    /**
+     * @param $model
+     * @param $searchData
+     *
+     * @return mixed
+     */
     private function setModelQuery($model, $searchData)
     {
         foreach ($searchData as $field => $searchValue) {

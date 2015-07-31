@@ -1,9 +1,17 @@
 <?php
 
-namespace Ontoo\Repositories\Generators;
+namespace Ontoo\Repository\Generators;
 
+/**
+ * Class Stub
+ *
+ * @package Ontoo\Repository\Generators
+ */
 class Stub
 {
+    /**
+     * @var string
+     */
     protected $filepath;
     /**
      * @var null
@@ -24,6 +32,9 @@ class Stub
         return $this->getContent();
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getContent()
     {
         $content = file_get_contents($this->getPath());
@@ -34,11 +45,17 @@ class Stub
         return $content;
     }
 
+    /**
+     * @return string
+     */
     private function getPath()
     {
         return $this->filepath;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function __toString()
     {
         return $this->getContent();

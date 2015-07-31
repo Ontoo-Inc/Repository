@@ -1,11 +1,11 @@
 <?php
 
-namespace Ontoo\Repositories\Contracts;
+namespace Ontoo\Repository\Contracts;
 
 /**
  * Interface RepositoryPresenterInterface
  *
- * @package Ontoo\Repositories\Contracts
+ * @package Ontoo\Repository\Contracts
  */
 interface RepositoryPresenterInterface
 {

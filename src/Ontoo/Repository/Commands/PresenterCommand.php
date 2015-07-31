@@ -1,12 +1,17 @@
 <?php
 
-namespace Ontoo\Commands;
+namespace Ontoo\Repository\Commands;
 
 use Illuminate\Console\Command;
-use Ontoo\Repositories\Generators\PresenterGenerator;
+use Ontoo\Repository\Generators\PresenterGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Class PresenterCommand
+ *
+ * @package Ontoo\Repository\Commands
+ */
 class PresenterCommand extends Command
 {
     /**

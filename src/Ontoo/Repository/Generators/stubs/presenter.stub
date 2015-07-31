@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use Ontoo\Repositories\Presenter\FractalPresenter;
+use Ontoo\Repository\Presenter\FractalPresenter;
 use $TRANSFORMER$;
 
 /**

@@ -1,15 +1,16 @@
 <?php
-namespace Ontoo\Repositories\Criteria;
+
+namespace Ontoo\Repository\Criteria;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Ontoo\Repositories\Contracts\CriteriaInterface;
-use Ontoo\Repositories\Contracts\RepositoryInterface;
+use Ontoo\Repository\Contracts\CriteriaInterface;
+use Ontoo\Repository\Contracts\RepositoryInterface;
 
 /**
  * Class OrderByCriteria
  *
- * @package Ontoo\Repositories\Criteria
+ * @package Ontoo\Repository\Criteria
  */
 class OrderByCriteria implements CriteriaInterface
 {

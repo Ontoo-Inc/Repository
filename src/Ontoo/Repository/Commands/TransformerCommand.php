@@ -1,12 +1,17 @@
 <?php
 
-namespace Ontoo\Commands;
+namespace Ontoo\Repository\Commands;
 
 use Illuminate\Console\Command;
-use Ontoo\Repositories\Generators\TransformerGenerator;
+use Ontoo\Repository\Generators\TransformerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Class TransformerCommand
+ *
+ * @package Ontoo\Repository\Commands
+ */
 class TransformerCommand extends Command
 {
     /**

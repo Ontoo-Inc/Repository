@@ -1,5 +1,5 @@
 <?php
-namespace Ontoo\Repositories\Presenter;
+namespace Ontoo\Repository\Presenter;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Pagination\AbstractPaginator;
@@ -9,16 +9,15 @@ use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\DataArraySerializer;
 use League\Fractal\Serializer\SerializerAbstract;
-use Ontoo\Repositories\Contracts\PresenterInterface;
+use Ontoo\Repository\Contracts\PresenterInterface;
 
 /**
  * Class FractalPresenter
  *
- * @package Ontoo\Repositories\Presenter
+ * @package Ontoo\Repository\Presenter
  */
 abstract class FractalPresenter implements PresenterInterface
 {
-
     /**
      * @var Manager
      */

@@ -1,15 +1,15 @@
 <?php
 
-namespace Ontoo\Repositories\Criteria;
+namespace Ontoo\Repository\Criteria;
 
 use Carbon\Carbon;
-use Ontoo\Repositories\Contracts\CriteriaInterface;
-use Ontoo\Repositories\Contracts\RepositoryInterface;
+use Ontoo\Repository\Contracts\CriteriaInterface;
+use Ontoo\Repository\Contracts\RepositoryInterface;
 
 /**
  * Class RangeCriteria
  *
- * @package Ontoo\Repositories\Criteria
+ * @package Ontoo\Repository\Criteria
  */
 class RangeCriteria implements CriteriaInterface
 {

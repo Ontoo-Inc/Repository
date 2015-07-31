@@ -1,11 +1,22 @@
 <?php
 
-namespace Ontoo\Repositories\Generators;
+namespace Ontoo\Repository\Generators;
 
+/**
+ * Class PresenterGenerator
+ *
+ * @package Ontoo\Repository\Generators
+ */
 class PresenterGenerator extends Generator
 {
+    /**
+     * @var string
+     */
     protected $stub = 'presenter';
 
+    /**
+     * @return array
+     */
     public function getReplacements()
     {
         return array_merge(parent::getReplacements(), [
@@ -13,11 +24,17 @@ class PresenterGenerator extends Generator
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getRootNamespace()
     {
         return parent::getRootNamespace() . 'Repositories\\Presenters\\';
     }
 
+    /**
+     * @return string
+     */
     public function getPath()
     {
         return $this->getBasePath() . '/Repositories/Presenters/' . $this->getName() . 'Presenter.php';

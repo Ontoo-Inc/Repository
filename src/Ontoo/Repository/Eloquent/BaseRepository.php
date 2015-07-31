@@ -1,22 +1,22 @@
 <?php
 
-namespace Ontoo\Repositories\Eloquent;
+namespace Ontoo\Repository\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container as App;
-use Ontoo\Repositories\Contracts\CriteriaInterface;
-use Ontoo\Repositories\Contracts\PresenterInterface;
-use Ontoo\Repositories\Contracts\RepositoryCriteriaInterface;
-use Ontoo\Repositories\Contracts\RepositoryInterface;
-use Ontoo\Repositories\Contracts\RepositoryPresenterInterface;
-use Ontoo\Repositories\Exceptions\RepositoryException;
+use Ontoo\Repository\Contracts\CriteriaInterface;
+use Ontoo\Repository\Contracts\PresenterInterface;
+use Ontoo\Repository\Contracts\RepositoryCriteriaInterface;
+use Ontoo\Repository\Contracts\RepositoryInterface;
+use Ontoo\Repository\Contracts\RepositoryPresenterInterface;
+use Ontoo\Repository\Exceptions\RepositoryException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 
 /**
  * Class BaseRepository
  *
- * @package Ontoo\Repositories\Eloquent
+ * @package Ontoo\Repository\Eloquent
  */
 abstract class BaseRepository implements RepositoryInterface, RepositoryCriteriaInterface, RepositoryPresenterInterface
 {
@@ -65,8 +65,14 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     protected $skipPresenter = false;
 
+    /**
+     * @var null
+     */
     public $orderBy = null;
 
+    /**
+     * @var null
+     */
     public $sortBy = null;
 
     /**

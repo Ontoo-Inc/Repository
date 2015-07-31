@@ -34,9 +34,9 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->commands([
-            \Ontoo\Commands\RepositoryCommand::class,
-            \Ontoo\Commands\TransformerCommand::class,
-            \Ontoo\Commands\PresenterCommand::class,
+            \Ontoo\Repository\Commands\RepositoryCommand::class,
+            \Ontoo\Repository\Commands\TransformerCommand::class,
+            \Ontoo\Repository\Commands\PresenterCommand::class,
         ]);
     }
 }

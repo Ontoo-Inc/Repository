@@ -1,15 +1,16 @@
 <?php
-namespace Ontoo\Repositories\Generators;
+
+namespace Ontoo\Repository\Generators;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Ontoo\Repositories\Exceptions\FileExistsException;
+use Ontoo\Repository\Exceptions\FileExistsException;
 
 /**
  * Class Generator
  *
- * @package Ontoo\Repositories\Generators
+ * @package Ontoo\Repository\Generators
  */
 abstract class Generator
 {
@@ -41,21 +42,33 @@ abstract class Generator
         $this->filesystem = new Filesystem;
     }
 
+    /**
+     * @return mixed
+     */
     public function getBasePath()
     {
         return config('repository.generator.basePath', app_path());
     }
 
+    /**
+     * @return mixed
+     */
     public function getRootNamespace()
     {
         return config('repository.generator.rootNamespace', $this->getAppNamespace());
     }
 
+    /**
+     * @return mixed
+     */
     public function getModelNamespace()
     {
         return config('repository.generator.modelNamespace', $this->getAppNamespace());
     }
 
+    /**
+     * @return null|string
+     */
     public function getNamespace()
     {
         $segments = $this->getSegments();
@@ -68,6 +81,9 @@ abstract class Generator
         return rtrim($rootNamespace . implode($segments, '\\'), '\\');
     }
 
+    /**
+     * @return array
+     */
     public function getReplacements()
     {
         return [
@@ -77,6 +93,10 @@ abstract class Generator
         ];
     }
 
+    /**
+     * @return int
+     * @throws FileExistsException
+     */
     public function run()
     {
         if ($this->filesystem->exists($path = $this->getPath())) {
@@ -89,6 +109,9 @@ abstract class Generator
         return $this->filesystem->put($path, $this->getStub());
     }
 
+    /**
+     * @return string
+     */
     protected function getName()
     {
         $name = $this->name;
@@ -99,21 +122,33 @@ abstract class Generator
         return Str::studly(ucwords($name));
     }
 
+    /**
+     * @return string
+     */
     public function getPath()
     {
         return $this->getBasePath() . '/' . $this->getName() . '.php';
     }
 
+    /**
+     * @return string
+     */
     private function getClass()
     {
         return Str::studly(class_basename($this->getName()));
     }
 
+    /**
+     * @return array
+     */
     private function getSegments()
     {
         return explode('/', $this->getName());
     }
 
+    /**
+     * @return Stub
+     */
     private function getStub()
     {
         return new Stub(
@@ -122,6 +157,11 @@ abstract class Generator
         );
     }
 
+    /**
+     * @param $key
+     *
+     * @return null
+     */
     public function getOption($key)
     {
         if (!$this->hasOption($key)) {
@@ -131,11 +171,21 @@ abstract class Generator
         return $this->options[$key] ?: null;
     }
 
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
     private function hasOption($key)
     {
         return array_key_exists($key, $this->options);
     }
 
+    /**
+     * @param $key
+     *
+     * @return null
+     */
     public function __get($key)
     {
         if (property_exists($this, $key)) {

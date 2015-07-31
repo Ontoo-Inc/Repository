@@ -1,10 +1,11 @@
 <?php
-namespace Ontoo\Commands;
+
+namespace Ontoo\Repository\Commands;
 
 use Illuminate\Console\Command;
-use Ontoo\Repositories\Generators\PresenterGenerator;
-use Ontoo\Repositories\Generators\RepositoryGenerator;
-use Ontoo\Repositories\Generators\TransformerGenerator;
+use Ontoo\Repository\Generators\PresenterGenerator;
+use Ontoo\Repository\Generators\RepositoryGenerator;
+use Ontoo\Repository\Generators\TransformerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

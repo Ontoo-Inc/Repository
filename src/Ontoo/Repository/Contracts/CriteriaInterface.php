@@ -1,13 +1,13 @@
 <?php
 
-namespace Ontoo\Repositories\Contracts;
+namespace Ontoo\Repository\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Interface CriteriaInterface
  *
- * @package Ontoo\Repositories\Contracts
+ * @package Ontoo\Repository\Contracts
  */
 interface CriteriaInterface
 {

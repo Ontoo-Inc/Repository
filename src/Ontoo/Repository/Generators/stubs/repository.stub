@@ -3,9 +3,9 @@
 namespace $NAMESPACE$;
 
 use $MODEL$;
-use Ontoo\Repositories\Contracts\Presentable;
-use Ontoo\Repositories\Criteria\RequestCriteria;
-use Ontoo\Repositories\Eloquent\BaseRepository;
+use Ontoo\Repository\Contracts\Presentable;
+use Ontoo\Repository\Criteria\RequestCriteria;
+use Ontoo\Repository\Eloquent\BaseRepository;
 $PRESENTER$
 
 /**
