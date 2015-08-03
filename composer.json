@@ -23,7 +23,10 @@
     "autoload": {
         "psr-4": {
             "Ontoo\\Repository\\": "src/Ontoo/Repository"
-        }
+        },
+        "files": [
+            "src/Ontoo/Repository/helper.php"
+        ]
     },
     "minimum-stability": "dev"
 }
