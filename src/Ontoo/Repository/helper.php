@@ -14,7 +14,7 @@ if ( ! function_exists('repo')) {
             return Container::getInstance();
         }
 
-        $repoPath = config('repository.generator.rootNamespace') . 'Repository\\';
+        $repoPath = config('repository.generator.rootNamespace') . 'Repositories\\';
 
         return Container::getInstance()->make($repoPath . $make, $parameters);
     }
