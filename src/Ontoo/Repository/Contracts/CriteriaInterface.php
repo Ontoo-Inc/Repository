@@ -2,8 +2,6 @@
 
 namespace Ontoo\Repository\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Interface CriteriaInterface
  *
@@ -17,5 +15,5 @@ interface CriteriaInterface
      *
      * @return mixed
      */
-    public function apply(Model $model, RepositoryInterface $repository);
+    public function apply($model, RepositoryInterface $repository);
 }

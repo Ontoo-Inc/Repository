@@ -2,7 +2,6 @@
 
 namespace Ontoo\Repository\Criteria;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Ontoo\Repository\Contracts\CriteriaInterface;
 use Ontoo\Repository\Contracts\RepositoryInterface;
@@ -35,7 +34,7 @@ class OrderByCriteria implements CriteriaInterface
      *
      * @return mixed
      */
-    public function apply(Model $model, RepositoryInterface $repository)
+    public function apply($model, RepositoryInterface $repository)
     {
         $orderBy = $this->request->get(
             config('repository.criteria.params.orderBy'),
