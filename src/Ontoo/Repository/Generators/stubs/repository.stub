@@ -23,6 +23,13 @@ class $CLASS$Repository extends BaseRepository implements Presentable
     protected $searchableFields = [];
 
     /**
+     * Relations for eagerLoading.
+     *
+     * @var array
+     */
+    protected $with = [];
+
+    /**
      * Set model for repository.
      *
      * @return string

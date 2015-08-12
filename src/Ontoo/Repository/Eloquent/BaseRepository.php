@@ -48,6 +48,8 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $searchableFields = [];
 
     /**
+     * Relations for eagerLoading.
+     *
      * @var array
      */
     protected $with = [];
