@@ -116,7 +116,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     /**
      * @throws RepositoryException
      */
-    private function resetModel()
+    protected function resetModel()
     {
         $this->makeModel();
     }
@@ -477,7 +477,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @return mixed
      */
-    private function parseResult($result)
+    protected function parseResult($result)
     {
         if ($this->presenter instanceof PresenterInterface) {
             if (! $this->skipPresenter) {
