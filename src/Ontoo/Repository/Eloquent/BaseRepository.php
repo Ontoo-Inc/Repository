@@ -48,6 +48,16 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $searchableFields = [];
 
     /**
+     * @var array
+     */
+    protected $with = [];
+
+    /**
+     * @var
+     */
+    protected $relations;
+
+    /**
      * @var
      */
     protected $validator;
@@ -214,6 +224,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function all($columns = ['*'])
     {
+        $this->eagerLoading();
         $this->applyCriteria();
         $results = $this->model->all($columns);
         $this->resetModel();
@@ -229,6 +240,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function paginate($perPage = null, $columns = ['*'])
     {
+        $this->eagerLoading();
         $this->applyCriteria();
         $perPage = is_null($perPage) ? config('repository.pagination.perPage', 25) : $perPage;
         $results = $this->model->paginate($perPage, $columns);
@@ -301,6 +313,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function find($id, $columns = ['*'])
     {
+        $this->eagerLoading();
         $this->applyCriteria();
         $results = $this->model->findOrFail($id, $columns);
         $this->resetModel();
@@ -317,6 +330,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function findBy($field, $value, $columns = ['*'])
     {
+        $this->eagerLoading();
         $this->applyCriteria();
         $results = $this->model->where($field, $value)->get($columns);
         $this->resetModel();
@@ -332,6 +346,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function findWhere(array $where, $columns = ['*'])
     {
+        $this->eagerLoading();
         $this->applyCriteria();
 
         foreach ($where as $field => $value) {
@@ -360,7 +375,23 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $relations = func_get_args();
         }
 
-        $this->model = $this->model->with($relations);
+        $this->relations = $relations;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function eagerLoading()
+    {
+        if (! is_null($this->with)) {
+            $this->model = $this->model->with($this->with);
+        }
+
+        if (! is_null($this->relations)) {
+            $this->model = $this->model->with($this->relations);
+        }
 
         return $this;
     }
