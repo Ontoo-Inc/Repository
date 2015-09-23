@@ -43,21 +43,16 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $skipCriteria = false;
 
     /**
+     * Fields for RequestCriteria.
+     *
+     * @var array
+     */
+    protected $searchableFields = [];
+
+    /**
      * @var
      */
     protected $relations;
-
-    /**
-     * @var
-     */
-    protected $validator;
-
-    /**
-     * Rules for validation.
-     *
-     * @var null
-     */
-    protected $rules = null;
 
     /**
      * @var
@@ -90,7 +85,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         $this->criteria = new Collection();
         $this->makeModel();
         $this->makePresenter();
-        $this->makeValidator();
         $this->boot();
     }
 
@@ -123,82 +117,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected function resetModel()
     {
         $this->makeModel();
-    }
-
-    /**
-     * @return null|\Prettus\Validator\LaravelValidator
-     */
-    public function validator()
-    {
-        if (isset($this->rules) && ! is_null($this->rules) && is_array($this->rules) && ! empty($this->rules)) {
-            $validator = $this->app->make(\Prettus\Validator\LaravelValidator::class);
-
-            if ($validator instanceof ValidatorInterface) {
-                $validator->setRules($this->rules);
-
-                return $validator;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @return null|ValidatorInterface
-     * @throws RepositoryException
-     */
-    private function makeValidator()
-    {
-        $validator = $this->validator();
-
-        if (! is_null($validator)) {
-            $this->validator = $validator;
-
-            if (! $this->validator instanceof ValidatorInterface) {
-                throw new RepositoryException(
-                    "Class {$validator} must be an instance of Prettus\\Validator\\Contracts\\ValidatorInterface"
-                );
-            }
-
-            return $this->validator;
-        }
-
-        return null;
-    }
-
-    /**
-     * Execute validation.
-     *
-     * @param array $data
-     * @param array|string $rule
-     */
-    protected function validate(array $data, $rule)
-    {
-        try {
-            if (! is_null($this->validator)) {
-                $this->validator
-                    ->with($data)
-                    ->passesOrFail($rule);
-            }
-        } catch (ValidatorException $e) {
-            $this->validationFail($e);
-        }
-    }
-
-    /**
-     * If validation failed, redirect to previous page.
-     *
-     * @param ValidatorException $error
-     */
-    protected function validationFail(ValidatorException $error)
-    {
-        $redirector = $this->app->make(\Illuminate\Routing\Redirector::class);
-
-        throw new HttpResponseException(
-            $redirector->to($redirector->getUrlGenerator()->previous())
-                ->withInput()
-                ->withErrors($error->getMessageBag(), 'default')
-        );
     }
 
     /**
@@ -285,8 +203,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function create(array $data)
     {
-        $this->validate($data, ValidatorInterface::RULE_CREATE);
-
         $results = $this->model->create($data);
         $this->resetModel();
 
@@ -308,7 +224,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         if (array_key_exists('_method', $data)) {
             unset($data['_method']);
         }
-        $this->validate($data, ValidatorInterface::RULE_UPDATE);
 
         $results = $this->model->where($field, $id)->update($data);
         $this->resetModel();
