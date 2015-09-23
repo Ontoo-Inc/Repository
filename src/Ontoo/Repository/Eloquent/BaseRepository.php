@@ -43,20 +43,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $skipCriteria = false;
 
     /**
-     * Fields for RequestCriteria.
-     *
-     * @var array
-     */
-    protected $searchableFields = [];
-
-    /**
-     * Relations for eagerLoading.
-     *
-     * @var array
-     */
-    protected $with = [];
-
-    /**
      * @var
      */
     protected $relations;
@@ -72,10 +58,12 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      * @var null
      */
     protected $rules = null;
+
     /**
      * @var
      */
     protected $presenter;
+
     /**
      * @var bool
      */
@@ -418,10 +406,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     protected function eagerLoading()
     {
-        if (! is_null($this->with)) {
-            $this->model = $this->model->with($this->with);
-        }
-
         if (! is_null($this->relations)) {
             $this->model = $this->model->with($this->relations);
         }

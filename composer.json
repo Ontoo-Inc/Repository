@@ -28,5 +28,6 @@
             "src/Ontoo/Repository/helper.php"
         ]
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
