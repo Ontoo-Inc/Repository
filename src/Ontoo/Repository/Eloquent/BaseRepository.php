@@ -3,7 +3,6 @@
 namespace Ontoo\Repository\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container as App;
 use Ontoo\Repository\Contracts\CriteriaInterface;
@@ -12,8 +11,6 @@ use Ontoo\Repository\Contracts\RepositoryCriteriaInterface;
 use Ontoo\Repository\Contracts\RepositoryInterface;
 use Ontoo\Repository\Contracts\RepositoryPresenterInterface;
 use Ontoo\Repository\Exceptions\RepositoryException;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class BaseRepository
@@ -145,12 +142,12 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     }
 
     /**
-     * @param PresenterInterface $presenter
+     * @param $presenter
      *
      * @return $this
      * @throws RepositoryException
      */
-    public function setPresenter(PresenterInterface $presenter)
+    public function setPresenter($presenter)
     {
         $this->makePresenter($presenter);
 

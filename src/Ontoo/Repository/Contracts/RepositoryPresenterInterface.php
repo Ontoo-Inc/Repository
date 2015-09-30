@@ -10,11 +10,11 @@ namespace Ontoo\Repository\Contracts;
 interface RepositoryPresenterInterface
 {
     /**
-     * @param PresenterInterface $presenter
+     * @param $presenter
      *
      * @return mixed
      */
-    public function setPresenter(PresenterInterface $presenter);
+    public function setPresenter($presenter);
 
     /**
      * @param bool|true $status
