@@ -162,6 +162,19 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
     }
 
+    /**
+     * take limit data of repository
+     *
+     * @param int $limit
+     * @return $this
+     */
+    public function take($limit)
+    {
+        $this->model = $this->model->take($limit);
+
+        return $this;
+    }
+
 
     /**
      * Add 'order by' clause to the query.
