@@ -192,6 +192,22 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     }
 
     /**
+     * Get Model's PrimaryKey
+     *
+     * @return string
+     */
+    public function getKeyName()
+    {
+        if ($this->model instanceof Model) {
+            return $this->model->getKeyName();
+        }
+
+        $model = $this->app->make($this->modelClass);
+
+        return $model->getKeyName();
+    }
+
+    /**
      * @return $this
      */
     public function applyOrder()
