@@ -62,14 +62,15 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $skipPresenter = false;
 
     /**
-     * @var null
+     * @var string
      */
-    public $orderBy = null;
+    protected $orderField = null;
 
     /**
-     * @var null
+     * @var string
      */
-    public $sortBy = null;
+    protected $orderDirection = 'asc';
+
 
     /**
      * BaseRepository constructor.
@@ -161,6 +162,37 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
     }
 
+
+    /**
+     * Add 'order by' clause to the query.
+     *
+     * @param $column
+     * @param string $direction
+     * @return $this
+     */
+    public function orderBy($column, $direction = 'asc')
+    {
+        $direction = strtolower($direction) === 'asc' ? 'asc' : 'desc';
+        $this->model = $this->model->orderBy($column, $direction);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function applyOrder()
+    {
+        if (count($this->model->getQuery()->orders) === 0) {
+            $field = ($this->orderField !== null) ? $this->orderField : $this->getKeyName();
+            $direction = strtolower($this->orderDirection) === 'asc' ? 'asc' : 'desc';
+
+            $this->model = $this->model->orderBy($field, $direction);
+        }
+
+        return $this;
+    }
+
     /**
      * @param array $columns
      *
@@ -170,6 +202,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->eagerLoading();
         $this->applyCriteria();
+        $this->applyOrder();
         $results = $this->model->all($columns);
         $this->resetModel();
 
@@ -186,6 +219,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->eagerLoading();
         $this->applyCriteria();
+        $this->applyOrder();
         $perPage = is_null($perPage) ? config('repository.pagination.perPage', 25) : $perPage;
         $results = $this->model->paginate($perPage, $columns);
         $this->resetModel();
@@ -265,6 +299,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->eagerLoading();
         $this->applyCriteria();
+        $this->applyOrder();
         $results = $this->model->where($field, $value)->get($columns);
         $this->resetModel();
 
@@ -281,6 +316,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->eagerLoading();
         $this->applyCriteria();
+        $this->applyOrder();
 
         foreach ($where as $field => $value) {
             if (is_array($value)) {
@@ -366,6 +402,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         }
 
         $this->model = $criteria->apply($this->model, $this);
+        $this->applyOrder();
         $results = $this->model->get();
         $this->resetModel();
 
