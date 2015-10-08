@@ -2,6 +2,7 @@
 
 namespace Ontoo\Repository\Eloquent;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container as App;
@@ -166,6 +167,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      * take limit data of repository
      *
      * @param int $limit
+     *
      * @return $this
      */
     public function take($limit)
@@ -181,6 +183,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @param $column
      * @param string $direction
+     *
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')
@@ -227,15 +230,26 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @return mixed
      */
-    public function all($columns = ['*'])
+    public function all($columns = ['*'], $isCount = false)
     {
         $this->eagerLoading();
         $this->applyCriteria();
-        $this->applyOrder();
-        $results = $this->model->all($columns);
+
+        if ($isCount) {
+            $results = $this->model->count();
+        } else {
+            $this->applyOrder();
+
+            if ($this->model instanceof Builder) {
+                $results = $this->model->get($columns);
+            } else {
+                $results = $this->model->all($columns);
+            }
+        }
+
         $this->resetModel();
 
-        return $this->parseResult($results);
+        return $isCount ? $results : $this->parseResult($results);
     }
 
     /**
@@ -249,7 +263,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         $this->eagerLoading();
         $this->applyCriteria();
         $this->applyOrder();
-        $perPage = is_null($perPage) ? config('repository.pagination.perPage', 25) : $perPage;
+        $perPage = $perPage ?: config('repository.pagination.perPage', 25);
         $results = $this->model->paginate($perPage, $columns);
         $this->resetModel();
 
@@ -270,25 +284,43 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     }
 
     /**
+     * Retrieve matched entity or create new one.
+     *
      * @param array $data
-     * @param $id
-     * @param string $field
      *
      * @return mixed
      */
-    public function update(array $data, $id, $field = 'id')
+    public function firstOrCreate(array $data)
     {
-        if (array_key_exists('_token', $data)) {
-            unset($data['_token']);
-        }
-        if (array_key_exists('_method', $data)) {
-            unset($data['_method']);
+        if ($entity = $this->take(1)->findWhere($data)->first()) {
+            return $entity;
         }
 
-        $results = $this->model->where($field, $id)->update($data);
         $this->resetModel();
 
-        return $this->parseResult($results);
+        return $this->create($data);
+    }
+
+    /**
+     * @param array $data
+     * @param $id
+     * @return mixed
+     * @throws RepositoryException
+     */
+    public function update(array $data, $id)
+    {
+        $_skipPresenter = $this->skipPresenter;
+        $this->skipPresenter(true);
+
+        $model = $this->find($id);
+        $model->fill($data);
+        $model->save();
+
+        $this->skipPresenter($_skipPresenter);
+
+        $this->makeModel();
+
+        return $this->parseResult($model);
     }
 
     /**
@@ -321,31 +353,40 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      * @param $field
      * @param $value
      * @param array $columns
+     * @param bool $isCount
      *
      * @return mixed
      */
-    public function findBy($field, $value, $columns = ['*'])
+    public function findBy($field, $value, $columns = ['*'], $isCount = false)
     {
         $this->eagerLoading();
         $this->applyCriteria();
-        $this->applyOrder();
-        $results = $this->model->where($field, $value)->get($columns);
+        if ($isCount) {
+            $counts = $this->model->where($field, $value)->count();
+        } else {
+            $this->applyOrder();
+            $results = $this->model->where($field, $value)->get($columns);
+        }
         $this->resetModel();
 
-        return $this->parseResult($results);
+        return $isCount ? $counts : $this->parseResult($results);
     }
 
     /**
      * @param array $where
      * @param array $columns
+     * @param bool $isCount
      *
      * @return mixed
      */
-    public function findWhere(array $where, $columns = ['*'])
+    public function findWhere(array $where, $columns = ['*'], $isCount = false)
     {
         $this->eagerLoading();
         $this->applyCriteria();
-        $this->applyOrder();
+
+        if (!$isCount) {
+            $this->applyOrder();
+        }
 
         foreach ($where as $field => $value) {
             if (is_array($value)) {
@@ -356,10 +397,14 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             }
         }
 
-        $results = $this->model->get($columns);
+        if ($isCount) {
+            $results = $this->model->get($columns);
+        } else {
+            $counts = $this->model->count();
+        }
         $this->resetModel();
 
-        return $this->parseResult($results);
+        return $isCount ? $counts : $this->parseResult($results);
     }
 
     /**

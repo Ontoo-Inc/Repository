@@ -38,7 +38,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function update(array $data, $id, $field = 'id');
+    public function update(array $data, $id);
 
     /**
      * @param $id
