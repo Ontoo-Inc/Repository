@@ -398,9 +398,9 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         }
 
         if ($isCount) {
-            $results = $this->model->get($columns);
-        } else {
             $counts = $this->model->count();
+        } else {
+            $results = $this->model->get($columns);
         }
         $this->resetModel();
 
