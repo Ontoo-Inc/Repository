@@ -48,9 +48,9 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $searchableFields = [];
 
     /**
-     * @var
+     * @var array
      */
-    protected $relations;
+    protected $relations = [];
 
     /**
      * @var
@@ -418,7 +418,9 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $relations = func_get_args();
         }
 
-        $this->relations = $relations;
+        $this->relations = array_unique(
+            array_merge($this->relations, $relations)
+        );
 
         return $this;
     }
