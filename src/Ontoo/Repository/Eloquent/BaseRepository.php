@@ -418,9 +418,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $relations = func_get_args();
         }
 
-        $this->relations = array_unique(
-            array_merge($this->relations, $relations)
-        );
+        $this->relations = array_merge($this->relations, $relations);
 
         return $this;
     }
