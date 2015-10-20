@@ -4,7 +4,6 @@ namespace $NAMESPACE$;
 
 use $MODEL$;
 use Ontoo\Repository\Contracts\Presentable;
-use Ontoo\Repository\Criteria\RequestCriteria;
 use Ontoo\Repository\Eloquent\BaseRepository;
 $PRESENTER$
 
@@ -16,20 +15,6 @@ $PRESENTER$
 class $CLASS$Repository extends BaseRepository implements Presentable
 {
     /**
-     * Fields for RequestCriteria.
-     *
-     * @var array
-     */
-    protected $searchableFields = [];
-
-    /**
-     * Relations for eagerLoading.
-     *
-     * @var array
-     */
-    protected $with = [];
-
-    /**
      * Set model for repository.
      *
      * @return string
@@ -37,14 +22,6 @@ class $CLASS$Repository extends BaseRepository implements Presentable
     public function model()
     {
         return $CLASS$::class;
-    }
-
-    /**
-     * Boot the repository.
-     */
-    public function boot()
-    {
-        $this->pushCriteria(RequestCriteria::class);
     }
 
     /**
