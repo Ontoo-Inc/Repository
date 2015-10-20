@@ -205,7 +205,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             return $this->model->getKeyName();
         }
 
-        $model = $this->app->make($this->modelClass);
+        $model = $this->app->make($this->model());
 
         return $model->getKeyName();
     }
