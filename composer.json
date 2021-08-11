@@ -10,13 +10,13 @@
     "license": "MIT",
     "keywords": ["laravel", "repository"],
     "require": {
-        "php": ">=5.4.0",
+        "php": "^7.0|^8.0",
         "league/fractal": "~0.12",
-        "illuminate/config": "~5.0|^6.0",
-        "illuminate/console": "~5.0|^6.0",
-        "illuminate/support": "~5.0|^6.0",
-        "illuminate/database": "~5.0|^6.20.26",
-        "illuminate/pagination": "~5.0|^6.0",
+        "illuminate/config": "^6.0",
+        "illuminate/console": "^6.0",
+        "illuminate/support": "^6.0",
+        "illuminate/database": "^6.20.26",
+        "illuminate/pagination": "^6.0",
         "prettus/laravel-validation": "~1.0"
     },
     "autoload": {
