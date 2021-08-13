@@ -10,7 +10,7 @@
     "license": "MIT",
     "keywords": ["laravel", "repository"],
     "require": {
-        "php": "^7.0|^8.0",
+        "php": "^7.3|^8.0",
         "league/fractal": "~0.12",
         "illuminate/config": "^6.0",
         "illuminate/console": "^6.0",

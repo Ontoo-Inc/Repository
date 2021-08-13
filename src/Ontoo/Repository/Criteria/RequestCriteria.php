@@ -79,7 +79,7 @@ class RequestCriteria implements CriteriaInterface
         }
         foreach ($queryString as $field => $value) {
             $value = explode(':', $value);
-            if (count($value) == 2) {
+            if (is_countable($value) && count($value) == 2) {
                 if (array_key_exists($field, $searchableFields)) {
                     $searchData[$field] = $this->parseCondition($value[0], $value[1]);
                 }
@@ -145,7 +145,7 @@ class RequestCriteria implements CriteriaInterface
     {
         foreach ($searchData as $field => $searchValue) {
             $field = explode('-', $field);
-            if (count($field) == 2) {
+            if (is_countable($field) && count($field) == 2) {
                 $model = $model->whereHas($field[0], function($query) use($field, $searchValue) {
                     if (is_array($searchValue['value'])) {
                         $query->whereIn($field[1], $searchValue['value']);
